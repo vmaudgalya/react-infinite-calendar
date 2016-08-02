@@ -10,7 +10,7 @@ export default class Header extends Component {
 		layout: PropTypes.string,
 		locale: PropTypes.object,
 		onClick: PropTypes.func,
-		selectedDate: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+		selectedDates: PropTypes.arrayOf(PropTypes.object),
 		shouldHeaderAnimate: PropTypes.bool,
 		theme: PropTypes.object,
 		display: PropTypes.string
@@ -19,8 +19,8 @@ export default class Header extends Component {
 		return shallowCompare(this, nextProps);
 	}
 	render() {
-		let {display, layout, locale, scrollToDate, selectedDate, setDisplay, shouldHeaderAnimate, theme} = this.props;
-		let values = selectedDate && [
+		let {display, layout, locale, scrollToDate, selectedDates, setDisplay, shouldHeaderAnimate, theme} = this.props;
+		let values = selectedDates && [
 			{
 				item: 'year',
 				value: selectedDate.year(),

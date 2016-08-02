@@ -27,9 +27,10 @@ export default class InfiniteCalendar extends Component {
 		this.updateLocale(props.locale);
 		this.updateYears(props);
 		this.state = {
-			selectedDate: this.parseSelectedDate(props.selectedDate),
+			selectedDates: this.parseSelectedDates(props.selectedDates),
 			display: props.display,
-			shouldHeaderAnimate: props.shouldHeaderAnimate
+			shouldHeaderAnimate: props.shouldHeaderAnimate,
+			showHeader: props.showHeader && !props.multiDate
 		};
 	}
 	static defaultProps = {
@@ -40,7 +41,8 @@ export default class InfiniteCalendar extends Component {
 		todayHelperRowOffset: 4,
 		layout: 'portrait',
 		display: 'days',
-		selectedDate: new Date(),
+		multiDate: false,
+		selectedDates: [new Date()],
 		min: {year: 1980, month: 0, day: 0},
 		minDate: {year: 1980, month: 0, day: 0},
 		max: {year: 2050, month: 11, day: 31},
@@ -57,7 +59,8 @@ export default class InfiniteCalendar extends Component {
 		hideYearsOnSelect: true
 	};
 	static propTypes = {
-		selectedDate: validDate,
+		selectedDates: PropTypes.arrayOf(validDate),
+		multiDate: PropTypes.bool,
 		min: validDate,
 		max: validDate,
 		minDate: validDate,
@@ -99,7 +102,7 @@ export default class InfiniteCalendar extends Component {
 		}
 	}
 	componentWillReceiveProps(next) {
-		let {min, minDate, max, maxDate, locale, selectedDate} = this.props;
+		let {min, minDate, max, maxDate, locale, selectedDates} = this.props;
 		let {display} = this.state;
 
 		if (next.locale !== locale) {
@@ -108,18 +111,17 @@ export default class InfiniteCalendar extends Component {
 		if (next.min !== min || next.minDate !== minDate || next.max !== max || next.maxDate !== maxDate) {
 			this.updateYears(next);
 		}
-		if (next.selectedDate !== selectedDate) {
-			var parsed = this.parseSelectedDate(next.selectedDate);
+		if (next.selectedDates !== selectedDates) {
+			var parsed = this.parseSelectedDates(next.selectedDates)
 			this.setState({
-				selectedDate: parsed
+				selectedDates: parsed
 			});
 			if(parsed) this.scrollToDate(parsed,-this.props.rowHeight*2);
 		} else if (next.minDate !== minDate || next.maxDate !== maxDate) {
-			// Need to make sure the currently selected date is not before the new minDate or after maxDate
-			let _selectedDate = this.parseSelectedDate(this.state.selectedDate);
-			if (!_selectedDate.isSame(this.state.selectedDate, 'day')) {
+			let _selectedDates = this.parseSelectedDates(this.state.selectedDates);
+			if (!_selectedDates == this.state.selectedDates) {
 				this.setState({
-					selectedDate: _selectedDate
+					selectedDates: _selectedDates
 				});
 			}
 		}
@@ -142,6 +144,14 @@ export default class InfiniteCalendar extends Component {
 		}
 
 		return selectedDate;
+	}
+	parseSelectedDates(selectedDates) {
+    var _selectedDates = []
+		for (var selectedDate in selectedDates) { // assume we are not given duplicates
+		  _selectedDates.push(this.parseSelectedDate(selectedDate));
+		}
+
+		return _selectedDates;
 	}
 	updateYears(props = this.props) {
 		let min = this._min = moment(props.min);
@@ -175,7 +185,7 @@ export default class InfiniteCalendar extends Component {
 			}
 
 			this.setState({
-				selectedDate,
+				selectedDates.push(selectedDate),
 				shouldHeaderAnimate,
 				highlightedDate: selectedDate.clone()
 			}, () => {
@@ -256,7 +266,7 @@ export default class InfiniteCalendar extends Component {
 	};
 	handleKeyDown = (e) => {
 		let {maxDate, minDate, onKeyDown} = this.props;
-		let {display, selectedDate, highlightedDate, showToday} = this.state;
+		let {display, selectedDates, highlightedDate, showToday} = this.state;
 		let delta = 0;
 
 		if (typeof onKeyDown == 'function') {
@@ -266,13 +276,13 @@ export default class InfiniteCalendar extends Component {
 			e.preventDefault();
 		}
 
-		if (!selectedDate) {
-			selectedDate = moment();
+		if (!selectedDates) {
+			selectedDates.push(moment());
 		}
 
 		if (display == 'days') {
 			if (!highlightedDate) {
-				highlightedDate = selectedDate.clone();
+				highlightedDate = selectedDates[0].clone();
 				this.setState({highlightedDate});
 			}
 
@@ -399,7 +409,7 @@ export default class InfiniteCalendar extends Component {
 							{...other}
 							width={width}
 							height={height}
-							selectedDate={parseDate(selectedDate)}
+							selectedDates={parseDate(selectedDate)}
 							disabledDates={disabledDates}
 							disabledDays={disabledDays}
 							months={this.months}
@@ -423,7 +433,7 @@ export default class InfiniteCalendar extends Component {
 							onDaySelect={this.onDaySelect}
 							minDate={minDate}
 							maxDate={maxDate}
-							selectedDate={selectedDate}
+							selectedDates={selectedDates}
 							theme={theme}
 							years={range(moment(min).year(), moment(max).year() + 1)}
 							setDisplay={this.setDisplay}
