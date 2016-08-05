@@ -413,11 +413,6 @@ export default class InfiniteCalendar extends Component {
 		let {display, isScrolling, selectedDate, showToday, shouldHeaderAnimate} = this.state;
 		let today = this.today = parseDate(moment());
 
-		// Selected date should not be disabled
-		if (selectedDate && (disabledDates && disabledDates.indexOf(selectedDate.format('YYYYMMDD')) !== -1 || disabledDays && disabledDays.indexOf(selectedDate.day()) !== -1)) {
-			selectedDate = null;
-		}
-
 		return (
 			<div tabIndex={tabIndex} onKeyDown={keyboardSupport && this.handleKeyDown} className={classNames(className, style.container.root, {[style.container.landscape]: layout == 'landscape'})} style={{color: theme.textColor.default, width}} aria-label="Calendar" ref="node">
 				{showHeader &&
