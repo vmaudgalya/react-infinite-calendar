@@ -23,11 +23,6 @@ export default class InfiniteCalendar extends Component {
 	constructor(props) {
 		super();
 
-		console.log('init min date' + props.min);
-
-		console.log('selected dates before parsing');
-		console.log(Object.assign([], props.selectedDates));
-
 		// Initialize
 		this.updateLocale(props.locale);
 		this.updateYears(props);
@@ -37,9 +32,6 @@ export default class InfiniteCalendar extends Component {
 			shouldHeaderAnimate: props.shouldHeaderAnimate,
 			showHeader: props.showHeader && !props.multiDate
 		};
-
-		console.log('selected dates after parsing');
-		console.log(Object.assign([], this.state.selectedDates));
 	}
 	static defaultProps = {
 		width: 400,
@@ -110,8 +102,6 @@ export default class InfiniteCalendar extends Component {
 		}
 	}
 	componentWillReceiveProps(next) {
-		console.log(Object.assign([], next.selectedDates));
-
 		let {min, minDate, max, maxDate, locale, selectedDates} = this.props;
 		let {display} = this.state;
 
@@ -142,16 +132,11 @@ export default class InfiniteCalendar extends Component {
 		}
 	}
 	parseSelectedDate(selectedDate) {
-
-		console.log('parsing selected date');
-		console.log(selectedDate);
-
 		if (selectedDate) {
 			selectedDate = moment(selectedDate);
 
 			// Selected Date should not be before min date or after max date
 			if (selectedDate.isBefore(this._minDate)) {
-				console.log(selectedDate + ' is before ' + this._minDate);
 				return this._minDate;
 			} else if (selectedDate.isAfter(this._maxDate)) {
 				return this._maxDate;
@@ -161,10 +146,6 @@ export default class InfiniteCalendar extends Component {
 		return selectedDate;
 	}
 	parseSelectedDates(selectedDates) {
-
-		console.log('parseing selected dates');
-		console.log(selectedDates);
-
     	var _selectedDates = []
 		for (var selectedDate of selectedDates) { // assume we are not given duplicates
 		  _selectedDates.push(this.parseSelectedDate(selectedDate));
@@ -412,6 +393,9 @@ export default class InfiniteCalendar extends Component {
 		let theme = this.getTheme();
 		let {display, isScrolling, selectedDates, showToday, shouldHeaderAnimate} = this.state;
 		let today = this.today = parseDate(moment());
+
+		console.log('rendering with selected dates');
+		console.log(Object.assign([], selectedDates));
 
 		return (
 			<div tabIndex={tabIndex} onKeyDown={keyboardSupport && this.handleKeyDown} className={classNames(className, style.container.root, {[style.container.landscape]: layout == 'landscape'})} style={{color: theme.textColor.default, width}} aria-label="Calendar" ref="node">
