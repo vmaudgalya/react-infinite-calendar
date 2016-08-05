@@ -184,8 +184,14 @@ export default class InfiniteCalendar extends Component {
 				onSelect(selectedDate, e);
 			}
 
+			let selectedDates = this.state.selectedDates || [];
+
+			// FIXME: only push it if it's not yet been selected
+			// this was not a concern with single date selection
+			selectedDates.push(selectedDate);
+
 			this.setState({
-				selectedDates.push(selectedDate),
+				selectedDates: selectedDates,
 				shouldHeaderAnimate,
 				highlightedDate: selectedDate.clone()
 			}, () => {
