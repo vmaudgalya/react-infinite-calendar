@@ -185,10 +185,13 @@ export default class InfiniteCalendar extends Component {
 			}
 
 			let selectedDates = this.state.selectedDates || [];
-
-			// FIXME: only push it if it's not yet been selected
-			// this was not a concern with single date selection
-			selectedDates.push(selectedDate);
+			const dateIndex = this.getSelectedDateIndex(selectedDate);
+			if (dateIndex === -1) {
+				selectedDates.push(selectedDate);
+			}
+			else {
+				selectedDates.splice(dateIndex, 1);
+			}
 
 			this.setState({
 				selectedDates: this.parseSelectedDates(selectedDates),
@@ -202,15 +205,26 @@ export default class InfiniteCalendar extends Component {
 			});
 		}
 	};
+	getSelectedDateIndex = (date) => {
+		var {selectedDates} = this.state;
+		let i = 0;
+		for (let selectedDate of selectedDates) {
+			if (selectedDate.format('YYYYMMDD') === date.format('YYYYMMDD')) {
+				return i;
+			}
+			i++;
+		}
+		return -1;
+	};
 	getCurrentOffset = () => {
 		return this.scrollTop;
-	}
+	};
 	getDateOffset = (date) => {
 		return this.list && this.list.getDateOffset(date);
 	};
 	scrollTo = (offset) => {
 		return this.list && this.list.scrollTo(offset);
-	}
+	};
 	scrollToDate = (date = moment(), offset) => {
 		return this.list && this.list.scrollToDate(date, offset);
 	};
