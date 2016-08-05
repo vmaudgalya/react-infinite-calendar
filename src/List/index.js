@@ -106,7 +106,7 @@ export default class List extends Component {
 	};
 	render() {
 		let {height, isScrolling, onScroll, overscanMonthCount, months, rowHeight, selectedDates, today, width} = this.props;
-		if (!this._initScrollTop) this._initScrollTop = this.getDateOffset(selectedDates && selectedDates.length && selectedDates[0].date || today.date);
+		if (!this._initScrollTop) this._initScrollTop = this.getDateOffset(selectedDates && selectedDates.length && selectedDates[0] || today.date);
 		if (typeof width == 'string' && width.indexOf('%') !== -1) {
 			width = window.innerWidth * parseInt(width.replace('%', ''), 10) / 100; // See https://github.com/bvaughn/react-virtualized/issues/229
 		}
