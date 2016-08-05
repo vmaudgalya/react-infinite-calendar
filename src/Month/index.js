@@ -27,7 +27,7 @@ export default class Month extends Component {
 				date = row[k];
 				day++;
 
-				isSelected = (selectedDates && selectedDates.length && selectedDates.indexOf(date.yyyymmdd) !== -1);
+				isSelected = this.dateIsSelected(date);
 				isToday = (today && date.yyyymmdd == today.yyyymmdd);
 				isDisabled = (
 					minDate && date.yyyymmdd < minDate.yyyymmdd ||
@@ -76,5 +76,16 @@ export default class Month extends Component {
 				}
 			</div>
 		);
+	}
+	dateIsSelected(date) {
+		const {selectedDates} = this.props;
+
+		for (var selectedDate of selectedDates) {
+			if (selectedDate.format('YYYYMMDD') === date.yyyymmdd) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
