@@ -178,29 +178,31 @@ export default class InfiniteCalendar extends Component {
 	}
 	onDaySelect = (selectedDate, e, shouldHeaderAnimate = this.props.shouldHeaderAnimate) => {
 		let {afterSelect, beforeSelect, onSelect} = this.props;
+		let selectedDates = this.state.selectedDates || [];
+		const dateIndex = this.getSelectedDateIndex(selectedDate);
+		const isSelected = (dateIndex === -1);
 
-		if (!beforeSelect || typeof beforeSelect == 'function' && beforeSelect(selectedDate)) {
+		if (!beforeSelect || typeof beforeSelect == 'function' && beforeSelect(selectedDate, isSelected, selectedDates)) {
 			if (typeof onSelect == 'function') {
-				onSelect(selectedDate, e);
+				onSelect(selectedDate, isSelected, selectedDates, e);
 			}
 
-			let selectedDates = this.state.selectedDates || [];
-			const dateIndex = this.getSelectedDateIndex(selectedDate);
-			if (dateIndex === -1) {
+			if (isSelected) {
 				selectedDates.push(selectedDate);
 			}
 			else {
 				selectedDates.splice(dateIndex, 1);
 			}
 
+			selectedDates = this.parseSelectedDates(selectedDates);
 			this.setState({
-				selectedDates: this.parseSelectedDates(selectedDates),
+				selectedDates: selectedDates,
 				shouldHeaderAnimate,
 				highlightedDate: selectedDate.clone()
 			}, () => {
 				this.clearHighlight();
 				if (typeof afterSelect == 'function') {
-					afterSelect(selectedDate);
+					afterSelect(selectedDate, isSelected, selectedDates);
 				}
 			});
 		}
