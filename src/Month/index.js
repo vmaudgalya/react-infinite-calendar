@@ -78,7 +78,7 @@ export default class Month extends Component {
 		);
 	}
 	dateIsSelected(date) {
-		const {selectedDates, historicallySelectedDates} = this.props;
+		const {selectedDates, fixedSelectedDates} = this.props;
 
 		for (var selectedDate of selectedDates) {
 			if (selectedDate.format('YYYYMMDD') === date.yyyymmdd) {
@@ -86,7 +86,7 @@ export default class Month extends Component {
 			}
 		}
 
-		if (historicallySelectedDates.map(d => {
+		if (fixedSelectedDates.map(d => {
 			return d.yyyymmdd;
 		}).indexOf(date.yyyymmdd) !== -1) {
 			return true;

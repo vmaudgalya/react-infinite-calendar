@@ -43,7 +43,7 @@ export default class InfiniteCalendar extends Component {
 		display: 'days',
 		multiDate: false,
 		selectedDates: [new Date()],
-		historicallySelectedDates: [],
+		fixedSelectedDates: [],
 		min: {year: 1980, month: 0, day: 0},
 		minDate: {year: 1980, month: 0, day: 0},
 		max: {year: 2050, month: 11, day: 31},
@@ -61,7 +61,7 @@ export default class InfiniteCalendar extends Component {
 	};
 	static propTypes = {
 		selectedDates: PropTypes.arrayOf(validDate),
-		historicallySelectedDates: PropTypes.arrayOf(validDate),
+		fixedSelectedDates: PropTypes.arrayOf(validDate),
 		multiDate: PropTypes.bool,
 		min: validDate,
 		max: validDate,
@@ -411,7 +411,7 @@ export default class InfiniteCalendar extends Component {
 		let theme = this.getTheme();
 		let {display, isScrolling, selectedDates, showToday, shouldHeaderAnimate} = this.state;
 		let today = this.today = parseDate(moment());
-		let historicallySelectedDates = parseDates(this.props.historicallySelectedDates);
+		let fixedSelectedDates = parseDates(this.props.fixedSelectedDates);
 
 		return (
 			<div tabIndex={tabIndex} onKeyDown={keyboardSupport && this.handleKeyDown} className={classNames(className, style.container.root, {[style.container.landscape]: layout == 'landscape'})} style={{color: theme.textColor.default, width}} aria-label="Calendar" ref="node">
@@ -430,7 +430,7 @@ export default class InfiniteCalendar extends Component {
 							width={width}
 							height={height}
 							selectedDates={selectedDates}
-							historicallySelectedDates={historicallySelectedDates}
+							fixedSelectedDates={fixedSelectedDates}
 							disabledDates={disabledDates}
 							disabledDays={disabledDays}
 							months={this.months}
