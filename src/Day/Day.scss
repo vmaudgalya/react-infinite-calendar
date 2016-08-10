@@ -100,14 +100,15 @@
                 font-size: 18px;
             }
         }
+
+        &.disabled div {
+             opacity: .5;
+        }
     }
     &.disabled {
         cursor: default;
         color: #AAA;
         cursor: not-allowed;
-    }
-    &.selected.disabled div {
-        opacity: .5;
     }
 }
 
