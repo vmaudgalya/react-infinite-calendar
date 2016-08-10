@@ -87,6 +87,7 @@
             @include circle();
             line-height: $rowHeight;
             z-index: 2;
+            margin-top: -0.5 * ($rowHeight + 8px);
 
             .month {
                 top: 9px;
