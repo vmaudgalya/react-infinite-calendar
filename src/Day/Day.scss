@@ -78,7 +78,7 @@
         > .month, > .year {
             display: none;
         }
-        
+
         &:before {
             display: none;
         }
@@ -104,6 +104,9 @@
         cursor: default;
         color: #AAA;
         cursor: not-allowed;
+    }
+    &.selected.disabled div {
+        opacity: .5;
     }
 }
 

@@ -78,12 +78,18 @@ export default class Month extends Component {
 		);
 	}
 	dateIsSelected(date) {
-		const {selectedDates} = this.props;
+		const {selectedDates, historicallySelectedDates} = this.props;
 
 		for (var selectedDate of selectedDates) {
 			if (selectedDate.format('YYYYMMDD') === date.yyyymmdd) {
 				return true;
 			}
+		}
+
+		if (historicallySelectedDates.map(d => {
+			return d.yyyymmdd;
+		}).indexOf(date.yyyymmdd) !== -1) {
+			return true;
 		}
 
 		return false;

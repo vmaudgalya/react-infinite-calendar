@@ -12,6 +12,7 @@ export default class List extends Component {
 		height: PropTypes.number,
 		rowHeight: PropTypes.number,
 		selectedDates: PropTypes.arrayOf(PropTypes.object),
+		historicallySelectedDates: PropTypes.arrayOf(PropTypes.object),
 		disabledDates: PropTypes.arrayOf(PropTypes.string),
 		disabledDays: PropTypes.arrayOf(PropTypes.number),
 		months: PropTypes.arrayOf(PropTypes.object),
@@ -81,13 +82,14 @@ export default class List extends Component {
 		}
 	};
 	renderMonth = ({index, isScrolling}) => {
-		let {disabledDates, disabledDays, locale, months, maxDate, minDate, onDaySelect, rowHeight, selectedDates, showOverlay, theme, today} = this.props;
+		let {disabledDates, historicallySelectedDates, disabledDays, locale, months, maxDate, minDate, onDaySelect, rowHeight, selectedDates, showOverlay, theme, today} = this.props;
 		let {date, rows} = this.memoize(months[index]);
 
 		return (
 			<Month
 				key={`Month-${index}`}
 				selectedDates={selectedDates}
+				historicallySelectedDates={historicallySelectedDates}
 				displayDate={date}
 				disabledDates={disabledDates}
 				disabledDays={disabledDays}

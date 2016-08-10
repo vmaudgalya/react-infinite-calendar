@@ -126,6 +126,14 @@ export function getScrollSpeed(settings) {
     };
 }
 
+export function parseDates (dates) {
+    var parsed = [];
+    for (var date of dates) {
+        parsed.push(parseDate(date));
+    }
+    return parsed;
+}
+
 export function parseDate (date) {
     if (date) {
         if (!date._isAMomentObject) date = moment(date);

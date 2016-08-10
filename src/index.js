@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import moment from 'moment';
 import debounce from 'lodash/debounce';
 import range from 'lodash/range';
-import {getScrollSpeed, getMonthsForYear, keyCodes, parseDate, validDate, validDisplay, validLayout} from './utils';
+import {getScrollSpeed, getMonthsForYear, keyCodes, parseDate, parseDates, validDate, validDisplay, validLayout} from './utils';
 import defaultLocale from './locale';
 import defaultTheme from './theme';
 import Today from './Today';
@@ -43,6 +43,7 @@ export default class InfiniteCalendar extends Component {
 		display: 'days',
 		multiDate: false,
 		selectedDates: [new Date()],
+		historicallySelectedDates: [],
 		min: {year: 1980, month: 0, day: 0},
 		minDate: {year: 1980, month: 0, day: 0},
 		max: {year: 2050, month: 11, day: 31},
@@ -60,6 +61,7 @@ export default class InfiniteCalendar extends Component {
 	};
 	static propTypes = {
 		selectedDates: PropTypes.arrayOf(validDate),
+		historicallySelectedDates: PropTypes.arrayOf(validDate),
 		multiDate: PropTypes.bool,
 		min: validDate,
 		max: validDate,
@@ -409,9 +411,7 @@ export default class InfiniteCalendar extends Component {
 		let theme = this.getTheme();
 		let {display, isScrolling, selectedDates, showToday, shouldHeaderAnimate} = this.state;
 		let today = this.today = parseDate(moment());
-
-		console.log('rendering with selected dates');
-		console.log(Object.assign([], selectedDates));
+		let historicallySelectedDates = parseDates(this.props.historicallySelectedDates);
 
 		return (
 			<div tabIndex={tabIndex} onKeyDown={keyboardSupport && this.handleKeyDown} className={classNames(className, style.container.root, {[style.container.landscape]: layout == 'landscape'})} style={{color: theme.textColor.default, width}} aria-label="Calendar" ref="node">
@@ -430,6 +430,7 @@ export default class InfiniteCalendar extends Component {
 							width={width}
 							height={height}
 							selectedDates={selectedDates}
+							historicallySelectedDates={historicallySelectedDates}
 							disabledDates={disabledDates}
 							disabledDays={disabledDays}
 							months={this.months}
