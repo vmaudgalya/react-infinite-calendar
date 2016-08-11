@@ -156,7 +156,7 @@ export function validDate(props, propName, componentName) {
 export function validParsedDate(props, propName, componentName) {
     let prop = props[propName];
 
-    if (prop.date && moment(prop.date).isValid() && prop.yyyymmdd && prop.yyyymmdd.length == 8) {
+    if (typeof prop === 'undefined' || (prop.date && moment(prop.date).isValid() && prop.yyyymmdd && prop.yyyymmdd.length == 8)) {
         // valid
     } else {
         return new Error(`Invalid prop \`${propName}\` supplied to ${componentName}.`);

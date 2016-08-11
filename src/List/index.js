@@ -24,6 +24,7 @@ export default class List extends Component {
 		min: validParsedDate,
 		minDate: validParsedDate,
 		maxDate: validParsedDate,
+		initScrollDate: validParsedDate,
 		showOverlay: PropTypes.bool,
 		theme: PropTypes.object,
 		locale: PropTypes.object
@@ -107,8 +108,19 @@ export default class List extends Component {
 		);
 	};
 	render() {
-		let {height, isScrolling, onScroll, overscanMonthCount, months, rowHeight, selectedDates, today, width} = this.props;
-		if (!this._initScrollTop) this._initScrollTop = this.getDateOffset(selectedDates && selectedDates.length && selectedDates[0] || today.date);
+		let {height, isScrolling, onScroll, overscanMonthCount, months, rowHeight, selectedDates, today, initScrollDate, width} = this.props;
+
+		if (initScrollDate) {
+			initScrollDate = initScrollDate.date;
+		}
+		else if (selectedDates && selectedDates.length) {
+			initScrollDate = selectedDates[0];
+		}
+		else {
+			initScrollDate = today.date;
+		}
+
+		if (!this._initScrollTop) this._initScrollTop = this.getDateOffset(initScrollDate);
 		if (typeof width == 'string' && width.indexOf('%') !== -1) {
 			width = window.innerWidth * parseInt(width.replace('%', ''), 10) / 100; // See https://github.com/bvaughn/react-virtualized/issues/229
 		}

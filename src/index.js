@@ -67,6 +67,7 @@ export default class InfiniteCalendar extends Component {
 		max: validDate,
 		minDate: validDate,
 		maxDate: validDate,
+		initScrollDate: validDate,
 		locale: PropTypes.object,
 		theme: PropTypes.object,
 		width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -118,7 +119,7 @@ export default class InfiniteCalendar extends Component {
 			this.setState({
 				selectedDates: parsed
 			});
-			if(parsed) this.scrollToDate(parsed,-this.props.rowHeight*2);
+			//if(parsed) this.scrollToDate(parsed,-this.props.rowHeight*2);
 		} else if (next.minDate !== minDate || next.maxDate !== maxDate) {
 			let _selectedDates = this.parseSelectedDates(this.state.selectedDates);
 			if (!_selectedDates == this.state.selectedDates) {
@@ -398,6 +399,7 @@ export default class InfiniteCalendar extends Component {
 			overscanMonthCount,
 			min,
 			minDate,
+			initScrollDate,
 			max,
 			maxDate,
 			showTodayHelper,
@@ -441,6 +443,7 @@ export default class InfiniteCalendar extends Component {
 							min={parseDate(min)}
 							minDate={parseDate(minDate)}
 							maxDate={parseDate(maxDate)}
+							initScrollDate={parseDate(initScrollDate)}
 							theme={theme}
 							locale={locale}
 							overscanMonthCount={overscanMonthCount}
