@@ -79,15 +79,11 @@
             display: none;
         }
 
-        &:before {
-            display: none;
-        }
-
         .selection {
             @include circle();
             line-height: $rowHeight;
+            min-height: $rowHeight - 4px;
             z-index: 2;
-            margin-top: -0.5 * ($rowHeight + 8px);
 
             .month {
                 top: 9px;
@@ -101,14 +97,18 @@
             }
         }
 
-        &.disabled div {
-             opacity: .5;
+        &.disabled .simpleDay {
+            visibility: hidden;
         }
     }
     &.disabled {
         cursor: default;
         color: #AAA;
         cursor: not-allowed;
+
+        > div {
+            opacity: .5;
+        }
     }
 }
 

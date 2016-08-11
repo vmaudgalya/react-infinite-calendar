@@ -12,23 +12,15 @@ export default function Day({currentYear, date, day, handleDayClick, isDisabled,
 			data-date={yyyymmdd}
 			onClick={(!isDisabled && handleDayClick) ? handleDayClick.bind(this, mmt) : null}
 		>
-			{!isSelected && renderUnselectedDayContents(day, year, currentYear, monthShort)}
-			{isSelected && renderSelectedDayContents(locale, isToday, isDisabled, day, monthShort, theme)}
+			{(day === 1) && <span className={style.month}>{monthShort}</span>}
+			<span className={style.simpleDay}>{day}</span>
+			{(day === 1 && currentYear !== year) && <span className={style.year}>{year}</span>}
+			{isSelected && renderSelectedDayContents(locale, isToday, day, monthShort, theme)}
 		</li>
 	);
 }
 
-function renderUnselectedDayContents(day, year, currentYear, monthShort) {
-	return (
-		<div>
-			{(day === 1) && <span className={style.month}>{monthShort}</span>}
-			<span>{day}</span>
-			{(day === 1 && currentYear !== year) && <span className={style.year}>{year}</span>}
-		</div>
-	);
-}
-
-function renderSelectedDayContents(locale, isToday, isDisabled, day, monthShort, theme) {
+function renderSelectedDayContents(locale, isToday, day, monthShort, theme) {
 	return (
 		<div className={style.selection} style={{backgroundColor: (typeof theme.selectionColor == 'function') ? theme.selectionColor(mmt) : theme.selectionColor, color: theme.textColor.active}}>
 			<span className={style.month}>{(isToday) ? (locale.todayLabel.short || locale.todayLabel.long) : monthShort}</span>
