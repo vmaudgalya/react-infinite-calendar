@@ -23,6 +23,9 @@ module.exports = {
     dayEnabled: {
         background: '#fff'
     },
+    daySelected: {
+        background: 'linear-gradient(90deg, #befce8, #7dfad2)'
+    },
     weekdayTextColor: '#13c9b7',
     weekdayPadding: '0',
     weekdayHeaderBorderBottom: '1px solid #7dfad2'
