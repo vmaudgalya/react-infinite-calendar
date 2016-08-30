@@ -11,5 +11,10 @@ module.exports = {
         background: 'rgba(56, 87, 138, 0.94)',
         color: '#FFF',
         chevron: '#FFA726'
+    },
+    //additions
+    calendarContainer: {
+        fontFamily: '"Trade Gothic", sans-serif',
+        fontSize: '1rem'
     }
 };
