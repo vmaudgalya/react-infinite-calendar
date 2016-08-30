@@ -24,7 +24,7 @@ function renderSelectedDayContents(locale, isToday, day, monthShort, theme) {
     return (
         <div className={style.selection} style={{backgroundColor: (typeof theme.selectionColor == 'function') ? theme.selectionColor(mmt) : theme.selectionColor, color: theme.textColor.active, background: theme.daySelected.background}}>
             <span className={style.month}>{(isToday) ? (locale.todayLabel.short || locale.todayLabel.long) : monthShort}</span>
-            <span className={style.day}>{day}</span>
+            <span className={style.day} style={theme.day}>{day}</span>
         </div>
     );
 }
