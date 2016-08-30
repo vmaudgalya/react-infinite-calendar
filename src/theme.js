@@ -20,6 +20,9 @@ module.exports = {
     month: {
         background: 'repeating-linear-gradient(45deg, #f2f2f2, #f2f2f2 1px, #fff 2px, #fff 10px)'
     },
+    monthOverlay: {
+        color: '#ccc'
+    },
     dayEnabled: {
         background: '#fff'
     },
