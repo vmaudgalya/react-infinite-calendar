@@ -16,5 +16,8 @@ module.exports = {
     calendarContainer: {
         fontFamily: '"Trade Gothic", sans-serif',
         fontSize: '1rem'
-    }
+    },
+    weekdayTextColor: '#13c9b7',
+    weekdayPadding: '0',
+    weekdayHeaderBorderBottom: '1px solid #7dfad2'
 };
