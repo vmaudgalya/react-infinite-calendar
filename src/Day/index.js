@@ -7,7 +7,7 @@ export default function Day({currentYear, date, day, handleDayClick, isDisabled,
 
 	return (
 		<li
-			style={(isToday) ? {color: theme.todayColor} : null}
+			style={(isToday) ? {color: theme.todayColor} : null, (!isDisabled) ? {background: theme.dayEnabled.background} : null}
 			className={`${style.root} ${isToday ? ' ' + style.today : ''} ${isSelected ? ' ' + style.selected : ''} ${isDisabled ? ' ' + style.disabled : ' ' + style.enabled}`}
 			data-date={yyyymmdd}
 			onClick={(!isDisabled && handleDayClick) ? handleDayClick.bind(this, mmt) : null}
@@ -22,9 +22,9 @@ export default function Day({currentYear, date, day, handleDayClick, isDisabled,
 
 function renderSelectedDayContents(locale, isToday, day, monthShort, theme) {
 	return (
-		<div className={style.selection} style={{backgroundColor: (typeof theme.selectionColor == 'function') ? theme.selectionColor(mmt) : theme.selectionColor, color: theme.textColor.active}}>
+		<div className={style.selection} style={{backgroundColor: (typeof theme.selectionColor == 'function') ? theme.selectionColor(mmt) : theme.selectionColor, color: theme.textColor.active, background: theme.daySelected.background}}>
 			<span className={style.month}>{(isToday) ? (locale.todayLabel.short || locale.todayLabel.long) : monthShort}</span>
-			<span className={style.day}>{day}</span>
+			<span className={style.day} style={theme.day}>{day}</span>
 		</div>
 	);
 }

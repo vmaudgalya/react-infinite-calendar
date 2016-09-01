@@ -65,13 +65,13 @@ export default class Month extends Component {
 		let {displayDate, today, rows, showOverlay, theme} = this.props;
 
 		return (
-			<div className={style.root}>
+			<div className={style.root} style={{background:theme.month.background}}>
 				<div className={style.rows}>
 					{this.renderRows()}
 				</div>
 				{showOverlay &&
 					<label className={classNames(style.label, {[style.partialFirstRow] : (rows[0].length !== 7)})} style={theme && theme.overlayColor && {backgroundColor: theme.overlayColor}}>
-						<span>{`${displayDate.format('MMMM')}${(!displayDate.isSame(today.date, 'year')) ? ' ' + displayDate.year() : ''}`}</span>
+						<span style={theme.monthOverlay}>{`${displayDate.format('MMMM')}${(!displayDate.isSame(today.date, 'year')) ? ' ' + displayDate.year() : ''}`}</span>
 					</label>
 				}
 			</div>
