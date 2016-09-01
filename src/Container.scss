@@ -1,51 +1,51 @@
 @import "./variables";
 
 .root {
-	position: relative;
-	display: table;
-	z-index: 1;
-	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	line-height: 1.4em;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	font-weight: 300;
-	outline: none;
+    position: relative;
+    display: table;
+    z-index: 1;
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 300;
+    outline: none;
 
-	&.landscape {
-		display: flex;
-		flex-direction: row;
+    &.landscape {
+        display: flex;
+        flex-direction: row;
 
-		.wrapper {
-			position: relative;
-			flex-grow: 1;
-			overflow: hidden;
-			z-index: 1;
-			border-top-right-radius: $borderRadius;
-			border-bottom-right-radius: $borderRadius;
-		}
-	}
+        .wrapper {
+            position: relative;
+            flex-grow: 1;
+            overflow: hidden;
+            z-index: 1;
+            border-top-right-radius: $borderRadius;
+            border-bottom-right-radius: $borderRadius;
+        }
+    }
 
-	:global {
-		.VirtualScroll {
-			-webkit-overflow-scrolling: touch;
-			outline: none;
-			overflow-x: hidden !important;
-		}
-		.Grid__innerScrollContainer {
-			width: 100% !important;
-		}
-	}
+    :global {
+        .VirtualScroll {
+            -webkit-overflow-scrolling: touch;
+            outline: none;
+            overflow-x: hidden !important;
+        }
+        .Grid__innerScrollContainer {
+            width: 100% !important;
+        }
+    }
 }
 .listWrapper {
-	position: relative;
-	overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 :global {
-	.VirtualScroll {
-		position: relative;
-		overflow: auto;
-	}
-	.Grid__cell {
-		position: absolute;
-	}
+    .VirtualScroll {
+        position: relative;
+        overflow: auto;
+    }
+    .Grid__cell {
+        position: absolute;
+    }
 }
