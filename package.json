@@ -1,39 +1,25 @@
 {
-  "name": "react-infinite-calendar",
+  "name": "inf-calendar-multidate",
   "version": "1.1.18",
-  "description": "Infinite scrolling date-picker built with React, with localization, themes, keyboard support, and more.",
+  "description": "something something",
   "author": {
-    "name": "Clauderic Demers",
-    "email": "me@ced.io"
+    "name": "Varun Maudgalya",
+    "email": "mvarun321@gmail.com"
   },
-  "user": "clauderic",
+  "user": "vmaudgalya",
   "homepage": "https://github.com/clauderic/react-infinite-calendar",
   "main": "dist/commonjs/index.js",
   "jsnext:main": "dist/es6/index.js",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/clauderic/react-infinite-calendar.git"
+    "url": "https://github.com/vmaudgalya/react-infinite-calendar.git"
   },
   "bugs": {
     "url": "https://github.com/clauderic/react-infinite-calendar/issues"
   },
   "keywords": [
-    "react",
-    "reactjs",
-    "react-component",
-    "infinite",
-    "calendar",
-    "endless",
-    "date",
-    "date-picker",
-    "month",
-    "day",
-    "year",
-    "scrolling",
     "virtual",
-    "picker",
-    "material",
     "flat"
   ],
   "scripts": {
