@@ -5,10 +5,10 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: $rowHeight - 4px;
-    height: $rowHeight - 4px;
-    margin-top: -0.5 * ($rowHeight - 4px);
-    margin-left: -0.5 * ($rowHeight - 4px);
+    width: $rowHeight - 10px;
+    height: $rowHeight - 10px;
+    margin-top: -0.5 * ($rowHeight - 10px);
+    margin-left: -0.5 * ($rowHeight - 10px);
     border-radius: 50%;
 }
 
@@ -78,14 +78,11 @@
         > .month, > .year {
             display: none;
         }
-        
-        &:before {
-            display: none;
-        }
 
         .selection {
             @include circle();
             line-height: $rowHeight;
+            min-height: $rowHeight - 10px;
             z-index: 2;
 
             .month {
@@ -99,11 +96,19 @@
                 font-size: 18px;
             }
         }
+
+        &.disabled .simpleDay {
+            visibility: hidden;
+        }
     }
     &.disabled {
         cursor: default;
         color: #AAA;
         cursor: not-allowed;
+
+        > div {
+            opacity: .5;
+        }
     }
 }
 

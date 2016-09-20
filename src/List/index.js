@@ -11,7 +11,8 @@ export default class List extends Component {
 		width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 		height: PropTypes.number,
 		rowHeight: PropTypes.number,
-		selectedDate: PropTypes.object,
+		selectedDates: PropTypes.arrayOf(PropTypes.object),
+		fixedSelectedDates: PropTypes.arrayOf(PropTypes.object),
 		disabledDates: PropTypes.arrayOf(PropTypes.string),
 		disabledDays: PropTypes.arrayOf(PropTypes.number),
 		months: PropTypes.arrayOf(PropTypes.object),
@@ -23,15 +24,16 @@ export default class List extends Component {
 		min: validParsedDate,
 		minDate: validParsedDate,
 		maxDate: validParsedDate,
+		initScrollDate: validParsedDate,
 		showOverlay: PropTypes.bool,
 		theme: PropTypes.object,
 		locale: PropTypes.object
 	};
 	componentDidMount() {
 		let vs = this.refs.VirtualScroll;
-		let grid = vs && vs.refs.Grid;
+		let grid = vs && vs.Grid;
 
-		this.scrollEl = grid && grid.refs.scrollingContainer;
+		this.scrollEl = grid && grid._scrollingContainer;
 	}
 	cache = {};
 	state = {};
@@ -81,13 +83,14 @@ export default class List extends Component {
 		}
 	};
 	renderMonth = ({index, isScrolling}) => {
-		let {disabledDates, disabledDays, locale, months, maxDate, minDate, onDaySelect, rowHeight, selectedDate, showOverlay, theme, today} = this.props;
+		let {disabledDates, fixedSelectedDates, disabledDays, locale, months, maxDate, minDate, onDaySelect, rowHeight, selectedDates, showOverlay, theme, today} = this.props;
 		let {date, rows} = this.memoize(months[index]);
 
 		return (
 			<Month
 				key={`Month-${index}`}
-				selectedDate={selectedDate}
+				selectedDates={selectedDates}
+				fixedSelectedDates={fixedSelectedDates}
 				displayDate={date}
 				disabledDates={disabledDates}
 				disabledDays={disabledDays}
@@ -105,8 +108,19 @@ export default class List extends Component {
 		);
 	};
 	render() {
-		let {height, isScrolling, onScroll, overscanMonthCount, months, rowHeight, selectedDate, today, width} = this.props;
-		if (!this.initScrollTop) this.initScrollTop = this.getDateOffset(selectedDate && selectedDate.date || today.date);
+		let {height, isScrolling, onScroll, overscanMonthCount, months, rowHeight, selectedDates, today, initScrollDate, width} = this.props;
+
+		if (initScrollDate) {
+			initScrollDate = initScrollDate.date;
+		}
+		else if (selectedDates && selectedDates.length) {
+			initScrollDate = selectedDates[0];
+		}
+		else {
+			initScrollDate = today.date;
+		}
+
+		if (!this._initScrollTop) this._initScrollTop = this.getDateOffset(initScrollDate);
 		if (typeof width == 'string' && width.indexOf('%') !== -1) {
 			width = window.innerWidth * parseInt(width.replace('%', ''), 10) / 100; // See https://github.com/bvaughn/react-virtualized/issues/229
 		}
@@ -121,7 +135,7 @@ export default class List extends Component {
 				estimatedRowSize={rowHeight * 5}
 				rowRenderer={this.renderMonth}
 				onScroll={onScroll}
-				scrollTop={this.initScrollTop}
+				scrollTop={this._initScrollTop}
 				className={classNames(style.root, {[style.scrolling]: isScrolling})}
 				style={{lineHeight: `${rowHeight}px`}}
 				overscanRowCount={overscanMonthCount}

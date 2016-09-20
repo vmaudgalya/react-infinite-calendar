@@ -17,13 +17,14 @@
             top: 1px;
             z-index: 1;
             margin-top: -1px;
-            background-color: #FFF;
-
+            // background-color: #FFF;
+            border-bottom: 1px solid #fff;
             box-shadow: 0 -1px 0 $borderColor;
         }
     }
     &:nth-child(2) {
         box-shadow: 0 -1px 0 $borderColor;
+        margin-top: 2px;
     }
     &.partial {
         &:first-child {

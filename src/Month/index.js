@@ -8,7 +8,7 @@ export default class Month extends Component {
 		return (!nextProps.isScrolling && !this.props.isScrolling);
 	}
 	renderRows() {
-		let {disabledDates, disabledDays, displayDate, locale, maxDate, minDate, onDaySelect, rowHeight, rows, selectedDate, today, theme} = this.props;
+		let {disabledDates, disabledDays, displayDate, locale, maxDate, minDate, onDaySelect, rowHeight, rows, selectedDates, today, theme} = this.props;
 		let currentYear = today.date.year();
 		let monthShort = displayDate.format('MMM');
 		let monthRows = [];
@@ -27,7 +27,7 @@ export default class Month extends Component {
 				date = row[k];
 				day++;
 
-				isSelected = (selectedDate && date.yyyymmdd == selectedDate.yyyymmdd);
+				isSelected = this.dateIsSelected(date);
 				isToday = (today && date.yyyymmdd == today.yyyymmdd);
 				isDisabled = (
 					minDate && date.yyyymmdd < minDate.yyyymmdd ||
@@ -65,16 +65,33 @@ export default class Month extends Component {
 		let {displayDate, today, rows, showOverlay, theme} = this.props;
 
 		return (
-			<div className={style.root}>
+			<div className={style.root} style={{background:theme.month.background}}>
 				<div className={style.rows}>
 					{this.renderRows()}
 				</div>
 				{showOverlay &&
 					<label className={classNames(style.label, {[style.partialFirstRow] : (rows[0].length !== 7)})} style={theme && theme.overlayColor && {backgroundColor: theme.overlayColor}}>
-						<span>{`${displayDate.format('MMMM')}${(!displayDate.isSame(today.date, 'year')) ? ' ' + displayDate.year() : ''}`}</span>
+						<span style={theme.monthOverlay}>{`${displayDate.format('MMMM')}${(!displayDate.isSame(today.date, 'year')) ? ' ' + displayDate.year() : ''}`}</span>
 					</label>
 				}
 			</div>
 		);
+	}
+	dateIsSelected(date) {
+		const {selectedDates, fixedSelectedDates} = this.props;
+
+		for (var selectedDate of selectedDates) {
+			if (selectedDate.format('YYYYMMDD') === date.yyyymmdd) {
+				return true;
+			}
+		}
+
+		if (fixedSelectedDates.map(d => {
+			return d.yyyymmdd;
+		}).indexOf(date.yyyymmdd) !== -1) {
+			return true;
+		}
+
+		return false;
 	}
 }
